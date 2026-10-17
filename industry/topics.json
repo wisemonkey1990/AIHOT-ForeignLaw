@@ -2,336 +2,348 @@
   "groups": [
     {
       "key": "company",
-      "name": "公司与模型",
-      "blurb": "按厂商追踪模型、产品与公司动态"
+      "name": "机构与平台",
+      "blurb": "按机构追踪：司法部、最高法、商务部、仲裁机构与国际组织的涉外法治动态"
     },
     {
       "key": "field",
-      "name": "技术方向",
-      "blurb": "按技术领域深挖：Agent、多模态、具身智能……"
+      "name": "工作层级与议题",
+      "blurb": "按层级和议题深挖：中央、部委、地方，自贸区、涉外仲裁、域外适用、数据出境……"
     },
     {
       "key": "genre",
       "name": "内容形态",
-      "blurb": "按内容类型浏览：论文、教程、观点、政策……"
+      "blurb": "按内容性质浏览：立法与政策、工作部署、司法案例、条约规则、实务指南……"
     }
   ],
   "topics": [
     {
-      "slug": "openai",
-      "name": "OpenAI / ChatGPT",
+      "slug": "moj",
+      "name": "司法部",
       "group": "company",
-      "entityId": "openai",
-      "definition": "OpenAI 的全部动态：GPT 系列模型、ChatGPT 与 Sora 产品、公司战略与人事的持续追踪。"
-    },
-    {
-      "slug": "anthropic",
-      "name": "Anthropic / Claude",
-      "group": "company",
-      "entityId": "anthropic",
-      "definition": "Anthropic 的全部动态：Claude 系列模型、Claude Code、安全研究路线与公司进展的持续追踪。"
-    },
-    {
-      "slug": "google",
-      "name": "Google / Gemini",
-      "group": "company",
-      "entityId": "google",
+      "entityId": "moj",
+      "definition": "司法部及其涉外法治局的动态：涉外法治规划与部署、法律服务平台、人才培养与专项行动。",
       "aliases": [
-        "DeepMind"
-      ],
-      "definition": "Google 与 DeepMind 的 AI 动态：Gemini 系列、Veo 视频模型、研究成果与产品生态的持续追踪。"
+        "涉外法治局"
+      ]
     },
     {
-      "slug": "deepseek",
-      "name": "DeepSeek",
+      "slug": "spc",
+      "name": "最高人民法院",
       "group": "company",
-      "entityId": "deepseek",
-      "definition": "DeepSeek（深度求索）的模型发布、开源权重、技术报告与 API 价格变化。"
+      "entityId": "spc",
+      "definition": "最高人民法院的涉外审判动态：司法解释、典型案例、涉外商事海事审判机制与国际司法协助。",
+      "aliases": [
+        "最高法"
+      ]
     },
     {
-      "slug": "qwen",
-      "name": "千问 Qwen",
+      "slug": "cicc",
+      "name": "国际商事法庭",
       "group": "company",
-      "entityId": "qwen",
-      "definition": "阿里千问 Qwen 系列的开源发布与迭代：从旗舰模型到端侧小模型的全谱系动态。"
+      "entityId": "cicc",
+      "definition": "最高人民法院国际商事法庭的案件、规则、专家委员会和一站式纠纷解决机制动态。",
+      "aliases": [
+        "CICC"
+      ]
     },
     {
-      "slug": "kimi",
-      "name": "Kimi / 月之暗面",
+      "slug": "spp",
+      "name": "最高人民检察院",
       "group": "company",
-      "entityId": "kimi",
-      "definition": "月之暗面 Kimi 系列模型与产品动态：K 系列开源模型、长上下文技术与产品演进的追踪。"
+      "entityId": "spp",
+      "definition": "最高人民检察院在涉外法治方面的动态：涉外检察工作、国际司法协助与典型案例。",
+      "aliases": [
+        "最高检"
+      ]
     },
     {
-      "slug": "minimax",
-      "name": "MiniMax",
+      "slug": "mofcom",
+      "name": "商务部",
       "group": "company",
-      "entityId": "minimax",
-      "definition": "MiniMax 的模型与产品动态：M 系列大模型、语音与多模态能力、开源与商业化进展。"
+      "entityId": "mofcom",
+      "definition": "商务部在对外贸易、对外投资、出口管制与反制措施方面的规则和动态。"
     },
     {
-      "slug": "zhipu",
-      "name": "智谱 GLM",
+      "slug": "mfa",
+      "name": "外交部",
       "group": "company",
-      "entityId": "zhipu",
-      "definition": "智谱的 GLM 系列模型动态：旗舰开源发布、代码与推理能力迭代、商业化与生态进展的追踪。"
+      "entityId": "mfa",
+      "definition": "外交部及条约法律司在条约谈判、国际法立场和涉外法律事务方面的动态。",
+      "aliases": [
+        "条法司"
+      ]
     },
     {
-      "slug": "xai",
-      "name": "xAI / Grok",
+      "slug": "falitong",
+      "name": "法通网",
       "group": "company",
-      "entityId": "xai",
-      "definition": "马斯克 xAI 与 Grok 系列的全部动态：模型迭代、算力扩张与 X 平台整合的持续追踪。"
+      "entityId": "falitong",
+      "definition": "司法部涉外法律服务平台法通网的上线、功能更新与法律资源库动态。"
     },
     {
-      "slug": "meta",
-      "name": "Meta / Llama",
+      "slug": "cietac",
+      "name": "贸仲",
       "group": "company",
-      "entityId": "meta",
-      "definition": "Meta 的 AI 动态：Llama 与 Muse 系列模型、超级智能实验室与 Meta AI 产品。"
+      "entityId": "cietac",
+      "definition": "中国国际经济贸易仲裁委员会的规则修订、案例选编、国际化布局与仲裁实务动态。",
+      "aliases": [
+        "CIETAC",
+        "中国国际经济贸易仲裁委员会"
+      ]
     },
     {
-      "slug": "microsoft",
-      "name": "Microsoft / Copilot",
+      "slug": "ccpit",
+      "name": "贸促会",
       "group": "company",
-      "entityId": "microsoft",
-      "definition": "微软的 AI 布局：Copilot 全家桶、Azure AI 基础设施与 OpenAI 合作关系的持续追踪。"
+      "entityId": "ccpit",
+      "definition": "中国贸促会及各地贸促会的涉外法律服务、商事调解与经贸摩擦应对动态。",
+      "aliases": [
+        "CCPIT"
+      ]
     },
     {
-      "slug": "nvidia",
-      "name": "NVIDIA 英伟达",
+      "slug": "un",
+      "name": "联合国",
       "group": "company",
-      "entityId": "nvidia",
-      "definition": "英伟达的 AI 芯片与生态动态：GPU 新品、CUDA 生态、机器人平台与 AI 算力市场的风向。"
+      "entityId": "un",
+      "definition": "联合国及其法律机构的动态：国际法委员会、国际贸易法委员会与大会决议。"
     },
     {
-      "slug": "hugging-face",
-      "name": "Hugging Face",
+      "slug": "wto",
+      "name": "WTO",
       "group": "company",
-      "entityId": "hugging-face",
-      "definition": "Hugging Face 开源社区动态：热门模型与数据集、排行榜变化与开源生态的晴雨表。"
+      "entityId": "wto",
+      "definition": "世界贸易组织的争端解决、规则谈判与成员动态。",
+      "aliases": [
+        "世贸组织"
+      ]
     },
     {
-      "slug": "cursor",
-      "name": "Cursor",
-      "group": "company",
-      "entityId": "cursor",
-      "definition": "Cursor（Anysphere）的编辑器与编码 Agent 动态：产品迭代、自研模型与定价变化。"
-    },
-    {
-      "slug": "openrouter",
-      "name": "OpenRouter",
-      "group": "company",
-      "entityId": "openrouter",
-      "definition": "OpenRouter 模型路由平台动态：新模型上架、用量排行与开发者选型的真实市场信号。"
-    },
-    {
-      "slug": "agent",
-      "name": "Agent 智能体",
+      "slug": "central",
+      "name": "中央部署",
       "group": "field",
       "tags": [
-        "Agent"
+        "中央"
       ],
-      "definition": "让模型自主规划、调用工具、完成多步任务的技术方向——从 Claude Code、Manus 到各家 Agent 框架与评测基准的全部动态。"
+      "definition": "中央层面的涉外法治部署：依法治国委员会、中央外事工作会议、国家级规划、意见与试点。"
     },
     {
-      "slug": "coding",
-      "name": "AI 编码",
+      "slug": "ministries",
+      "name": "部委推进",
       "group": "field",
       "tags": [
-        "编码"
+        "部委"
       ],
-      "definition": "AI 写代码的一切：编码助手、Vibe Coding、代码模型评测与开发工作流变革。"
+      "definition": "部委层面的涉外法治工作：机制建设、平台上线、专项行动与人才培养计划。"
     },
     {
-      "slug": "reasoning",
-      "name": "推理能力",
+      "slug": "local",
+      "name": "地方实践",
       "group": "field",
       "tags": [
-        "推理"
+        "地方"
       ],
-      "definition": "模型推理能力的进展：思维链、推理模型、数学与逻辑基准的突破与争议。"
+      "definition": "省市层面的涉外法治实践：司法厅局、法院、仲裁机构和贸促会的涉外制度创新与服务机制。"
     },
     {
-      "slug": "multimodal",
-      "name": "多模态",
+      "slug": "ftz",
+      "name": "自贸区与自贸港",
       "group": "field",
       "tags": [
-        "多模态"
+        "自贸区"
       ],
-      "definition": "文本之外的能力：视觉理解、图文混合、音视频输入输出的模型与产品进展。"
+      "definition": "自贸区、自贸港的涉外法治制度创新：跨境争议解决、法律服务集聚区与开放型规则。"
     },
     {
-      "slug": "image-gen",
-      "name": "图像生成",
+      "slug": "lawyers",
+      "name": "涉外律师与人才",
       "group": "field",
       "tags": [
-        "图像生成"
+        "涉外律师"
       ],
-      "definition": "AI 画图的最前线：文生图模型迭代、图像编辑能力与创作工具生态的全部动态。"
+      "definition": "涉外律师、仲裁员和国际法律人才的培养、人才库与境外服务布局。"
     },
     {
-      "slug": "video",
-      "name": "AI 视频",
+      "slug": "arbitration",
+      "name": "涉外仲裁",
       "group": "field",
       "tags": [
-        "视频"
+        "涉外仲裁"
       ],
-      "definition": "AI 视频生成与理解：文生视频模型、视频编辑工具与影视创作变革的追踪。"
+      "definition": "涉外仲裁的规则、案例、仲裁地制度与仲裁机构国际化。"
     },
     {
-      "slug": "voice",
-      "name": "语音与音频",
+      "slug": "fact-finding",
+      "name": "域外法查明",
       "group": "field",
       "tags": [
-        "语音"
+        "法律查明"
       ],
-      "definition": "AI 语音与音频的进展：语音合成、实时对话、音乐生成与音频理解的模型与产品。"
+      "definition": "外国法与域外法律的查明：平台、专家机制与法院实践。"
     },
     {
-      "slug": "embodied",
-      "name": "具身智能",
+      "slug": "extraterritorial",
+      "name": "法律域外适用",
       "group": "field",
       "tags": [
-        "具身智能"
+        "域外适用"
       ],
-      "definition": "AI 走进物理世界：人形机器人、具身基础模型与真实环境操作能力的进展追踪。"
+      "definition": "中国法律的域外适用，以及外国法律对中国主体的域外适用与应对。"
     },
     {
-      "slug": "on-device",
-      "name": "端侧 AI",
+      "slug": "sanctions",
+      "name": "出口管制与制裁",
       "group": "field",
       "tags": [
-        "端侧"
+        "出口管制与制裁",
+        "反外国制裁"
       ],
-      "definition": "跑在手机、电脑与边缘设备上的 AI：小模型、本地推理与端侧芯片的进展。"
+      "definition": "出口管制、制裁与反制措施的规则、执法与企业应对。"
     },
     {
-      "slug": "open-source",
-      "name": "开源生态",
+      "slug": "data-export",
+      "name": "数据出境",
       "group": "field",
       "tags": [
-        "开源生态",
-        "开源/仓库"
+        "数据出境"
       ],
-      "definition": "开源模型、框架与仓库动态：权重开放、社区项目爆火、开源与闭源的力量消长。"
+      "definition": "数据跨境流动的监管规则、安全评估与企业合规实践。"
     },
     {
-      "slug": "engineering",
-      "name": "部署工程",
+      "slug": "maritime",
+      "name": "海事海商",
       "group": "field",
       "tags": [
-        "部署/工程"
+        "海事海商"
       ],
-      "definition": "把模型跑起来的工程实践：推理优化、显存与成本、Serving 架构与基础设施选型。"
+      "definition": "涉外海事海商审判、规则与国际公约的适用。"
     },
     {
-      "slug": "data-training",
-      "name": "数据与训练",
+      "slug": "ip",
+      "name": "涉外知识产权",
       "group": "field",
       "tags": [
-        "数据/训练"
+        "知识产权"
       ],
-      "definition": "训练侧的门道：数据集构建、合成数据、预训练与后训练方法、算力与训练成本。"
+      "definition": "涉外知识产权的保护、纠纷与国际规则。"
     },
     {
-      "slug": "safety",
-      "name": "安全对齐",
+      "slug": "investment",
+      "name": "对外投资",
       "group": "field",
       "tags": [
-        "安全/对齐"
+        "对外投资"
       ],
-      "definition": "AI 安全与对齐：越狱与防御、模型行为研究、安全评测与治理框架的进展。"
+      "definition": "对外投资的法律规则、保护机制与争议解决。"
     },
     {
-      "slug": "mcp",
-      "name": "MCP 与工具调用",
+      "slug": "immunity",
+      "name": "国家豁免",
       "group": "field",
       "tags": [
-        "MCP/工具调用"
+        "国家豁免"
       ],
-      "definition": "模型连接外部世界的协议与实践：MCP 生态、function calling、工具链集成的动态。"
+      "definition": "国家及其财产豁免的立法、判例与国际实践。"
     },
     {
-      "slug": "model-releases",
-      "name": "模型发布",
+      "slug": "enforcement",
+      "name": "跨境执行",
+      "group": "field",
+      "tags": [
+        "跨境执行"
+      ],
+      "definition": "判决与仲裁裁决的跨境承认与执行：规则、互惠与典型案例。"
+    },
+    {
+      "slug": "bri",
+      "name": "一带一路",
+      "group": "field",
+      "tags": [
+        "一带一路"
+      ],
+      "definition": "共建“一带一路”中的法治合作：争议解决、法律服务与规则对接。"
+    },
+    {
+      "slug": "intl-orgs",
+      "name": "国际组织",
+      "group": "field",
+      "tags": [
+        "国际组织"
+      ],
+      "definition": "联合国等国际组织在国际法和涉外法治方面的规则、决议与活动。"
+    },
+    {
+      "slug": "legislation",
+      "name": "立法与政策",
       "group": "genre",
       "tags": [
-        "模型发布"
+        "立法与政策"
       ],
-      "definition": "新模型的发布、开源与迭代：大模型厂商的旗舰更新、开源权重放出、性能与价格变化的第一时间记录。"
+      "definition": "涉外法律、行政法规、司法解释、规章和政策文件的制定与修订。"
     },
     {
-      "slug": "product-updates",
-      "name": "产品更新",
+      "slug": "deployment",
+      "name": "工作部署",
       "group": "genre",
       "tags": [
-        "产品更新"
+        "工作部署"
       ],
-      "definition": "AI 产品与应用的功能上新、改版与商业化动态——谁家的产品变强了、变贵了、能用了。"
+      "definition": "涉外法治工作的部署与推进：规划、机制建设、专项行动与试点。"
     },
     {
-      "slug": "papers",
-      "name": "论文研究",
+      "slug": "cases",
+      "name": "司法与案例",
       "group": "genre",
       "tags": [
-        "论文/研究"
+        "司法与案例"
       ],
-      "definition": "值得读的 AI 论文与研究成果：架构创新、训练方法、能力测量与理论进展的精选解读。"
+      "definition": "涉外判决、裁定与典型案例，及其对规则适用的意义。"
     },
     {
-      "slug": "benchmarks",
-      "name": "评测基准",
+      "slug": "treaties",
+      "name": "条约与国际规则",
       "group": "genre",
       "tags": [
-        "评测/基准"
+        "条约与国际规则"
       ],
-      "definition": "模型到底谁强：Benchmark 成绩、评测方法论争议与排行榜变化的持续记录。"
+      "definition": "条约的签署、批准、生效，以及多边规则与国际法的发展。"
     },
     {
-      "slug": "tutorials",
-      "name": "教程实践",
+      "slug": "dispute-resolution",
+      "name": "仲裁与争议解决",
       "group": "genre",
       "tags": [
-        "教程/实践"
+        "仲裁与争议解决"
       ],
-      "definition": "拿来就能用的实操内容：提示词技巧、工作流搭建、工具用法与踩坑经验。"
+      "definition": "国际仲裁、调解和跨境诉讼的规则变化与实务动态。"
     },
     {
-      "slug": "opinions",
-      "name": "大佬观点",
+      "slug": "practice",
+      "name": "实务指南",
       "group": "genre",
       "tags": [
-        "大佬观点"
+        "实务指南"
       ],
-      "definition": "行业关键人物在想什么：创始人访谈、研究者论战、投资人判断的观点集合。"
+      "definition": "跨境合规与涉外法律事务的操作指引、国别法务指南与办案经验。"
     },
     {
-      "slug": "trends",
-      "name": "现象与趋势",
+      "slug": "scholarship",
+      "name": "学术与智库",
       "group": "genre",
       "tags": [
-        "现象/趋势"
+        "学术与智库"
       ],
-      "definition": "正在发生的行业级变化：使用习惯迁移、能力涌现、社会影响与市场格局的观察。"
+      "definition": "论文、研究报告和智库观点：涉外法治的理论与政策研究。"
     },
     {
-      "slug": "industry",
-      "name": "行业动态",
+      "slug": "platforms",
+      "name": "平台与人才",
       "group": "genre",
       "tags": [
-        "行业动态"
+        "平台与人才"
       ],
-      "definition": "AI 行业的商业脉搏：融资并购、人事变动、合作与竞争、政策与市场信号。"
-    },
-    {
-      "slug": "policy",
-      "name": "政策监管",
-      "group": "genre",
-      "tags": [
-        "政策/监管"
-      ],
-      "definition": "AI 相关政策法规与政府监管动态：立法进展、出口管制与全球治理框架的追踪。"
+      "definition": "涉外法律服务平台、研究基地与人才培养的建设动态。"
     }
   ]
 }

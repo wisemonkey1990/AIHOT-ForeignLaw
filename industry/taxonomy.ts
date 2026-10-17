@@ -1,153 +1,137 @@
-// 这个行业的分类体系：类别、标签词表、公司（主体）名录，以及防止张冠李戴的身份词典。
+// 涉外法治信息港的分类体系：类别、标签词表、机构（主体）名录，以及防止张冠李戴的身份词典。
 // 模型按这里的词表打标签，主题页（topics.json）按标签归类，筛选栏按类别分组。
-// 换行业时：类别的 key 会出现在网址里（/all?category=…），上线后就不要再改；标签和名录可以随时增减。
+// 类别的 key 会出现在网址里（/all?category=…），上线后就不要再改；标签和名录可以随时增减。
 
 /**
  * 网页上的类别（筛选栏、卡片角标、RSS 分类订阅）。key 是网址和接口里的身份，上线后不要改。
  * section 是日报里的分节标题（几个类别可以共用一节，按这里的顺序排）；guide 告诉结构抽取模型这一类收什么、
  * 和相邻类别的边界在哪（总的归类原则写在 prompts/structure.md 里）。
- * commentary 标出评论类（教程、观点）：日报写过的事又有评论类的后续报道，只占一行快讯（报道它的信源够多时除外）。
+ * commentary 标出评论类（实务指南、学术与智库）：日报写过的事又有评论类的后续报道，只占一行快讯（报道它的信源够多时除外）。
  * 没归上类的资料在日报里放进第一个 key 为 industry 的类别所在的节（没有就放最后一节）。
  * feedLabel 是分类 RSS 标题里的名字（不写就用 label）。公开接口、RSS 和 MCP 里要把一类并进另一类发布，写在站点设置里（site/site.ts 的 PUBLIC_CATEGORIES）。
  */
 export const CATEGORIES = [
-  { key: "ai-models", label: "模型", feedLabel: "AI 模型", section: "模型发布/更新", guide: "模型本身的发布、版本、权重开放、能力或价格变化，以及既有榜单上的模型成绩。公布一次跑分不是发布新基准，也不是教程。" },
-  { key: "ai-products", label: "产品", feedLabel: "AI 产品", section: "产品发布/更新", guide: "可使用的 AI 产品、功能、应用、工具、API、平台和工程组件的发布更新。模型厂商发布的推理框架、算子库、硬件适配组件仍是产品，不能因为厂商名归成模型。" },
-  { key: "industry", label: "行业", feedLabel: "行业动态", section: "行业动态", guide: "已发生的公司经营、融资并购、人事、合作、诉讼、政策、真实安全事故及调查进展。新闻由当事人发帖、带有态度，也不因此变成观点。" },
-  { key: "paper", label: "论文", feedLabel: "论文", section: "论文研究", guide: "以新研究方法、实验设计与发现为核心的论文、技术报告、新基准或研究数据集。系统性红队实验属于研究；既有榜单成绩归模型，真实事故的新闻调查归行业。" },
-  { key: "tip", label: "教程", section: "技巧与观点", guide: "读者可以照着使用的方法、提示词、工具用法、工程实践复盘与技术讲解。重点是可复用的做法；单纯发布工具归产品，只有态度和预测而无做法归观点。", commentary: true },
-  { key: "opinion", label: "观点", section: "技巧与观点", guide: "重点是作者的解释、判断、主张、预测、评论或访谈观点。讨论市场不自动归行业，作者是名人不自动归观点。", commentary: true },
+  { key: "industry", label: "涉外法治工作", feedLabel: "涉外法治工作动态", section: "涉外法治工作动态", guide: "从中央到地方推进涉外法治工作的动态：中央部署与规划，部委的机制建设、平台上线、专项行动和人才培养，地方（省市司法厅局、自贸区、涉外法律服务集聚区、地方法院、仲裁机构、贸促会）的涉外制度创新与实践。重点是治理与工作机制，而不是规则文本本身或某个具体案件。不含涉外要素的纯内政法务、普通普法、常规会议不属于这一类。" },
+  { key: "intl-public-law", label: "国际公法", section: "国际规则与条约", guide: "条约及其签署、批准、生效、保留，联合国及其他多边机构的规则与决议，海洋法、国家豁免、国际刑事司法、国际法委员会的工作成果。规则的制定、修订和重要缔约方动作归这一类；某国为落实条约而出台的国内立法，看重点是条约本身还是国内的工作部署。" },
+  { key: "trade-investment", label: "国际贸易与投资", section: "贸易与投资规则", guide: "WTO 与贸易协定、对外投资与外资规则、出口管制、制裁与反制裁、反倾销等贸易救济、域外适用的法律。重点是规则、措施及其法律后果；仅涉及经贸数据或企业经营而无法律规则变化的，不属于这一类。" },
+  { key: "dispute-resolution", label: "国际商事争议解决", section: "争议解决", guide: "涉外商事和海事的诉讼、国际仲裁与调解：规则修订、典型案例、跨境判决与仲裁裁决的承认和执行、涉外送达与取证、仲裁机构和国际商事法庭的机制变化。具体判决和裁决归这一类；地方为建设争议解决机制而做的部署归涉外法治工作。" },
+  { key: "cross-border-compliance", label: "跨境合规", section: "跨境合规", guide: "企业跨境经营的合规要求与监管动态：数据出境、反腐败与反贿赂、供应链尽职调查、外国法域的监管执法、反垄断申报等。重点是合规义务和执法实践；出口管制、制裁的规则本身归国际贸易与投资。" },
+  { key: "foreign-legal-services", label: "涉外法律服务", section: "涉外法律服务", guide: "涉外法律服务的供给与能力建设：法律查明平台（如法通网）、涉外律师和仲裁人才库与培养、律所的境外布局、法律服务集聚区、公共法律服务。平台建设和人才培养如果是部委或地方的整体工作部署，归涉外法治工作。" },
+  { key: "tip", label: "实务指南", section: "实务与观点", guide: "读者可以照着做的合规指引、操作流程、条款与程序要点、国别法务指南、案例办案经验。重点是可复用的做法；单纯发布规则归对应领域类别，只有态度和预测而无做法归学术与智库。", commentary: true },
+  { key: "opinion", label: "学术与智库", feedLabel: "学术与智库", section: "实务与观点", guide: "重点是作者的解读、判断、主张、研究结论或访谈观点：论文、研究报告、智库文章、学者与实务人士的评论。讨论一项规则不自动算成规则类，作者是官员或名人不自动算成工作动态。", commentary: true },
 ] as const satisfies ReadonlyArray<{ key: string; label: string; feedLabel?: string; section: string; guide: string; commentary?: true }>;
 
 /**
  * 这个行业最受关注的一类发布（AI 行业是新模型）：日报报头的“N 个新模型”、改分类后修订已出的报告都按它数。
- * category 是类别，tag 是标签，两者都对上才算；unit 接在数字后面。
- * 没有这样一类的行业设成 null，报头就不显示这个数。
+ * 涉外法治没有这样一类，报头就不显示这个数。
  */
-export const RELEASE: { category: string; tag: string; unit: string } | null = { category: "ai-models", tag: "模型发布", unit: "个新模型" };
+export const RELEASE: { category: string; tag: string; unit: string } | null = null;
 
 /** 周报月报的总述可以直接写、不必在报道里找到出处的行业通用词（小写）。站名会自动算进去。 */
-export const PLAIN_TERMS: readonly string[] = ["ai", "api", "llm", "gpu", "agi", "ceo", "ipo"];
+export const PLAIN_TERMS: readonly string[] = ["涉外法治", "涉外", "法治", "国际法", "条约", "仲裁", "司法", "立法"];
 
 /**
  * 内容理解一步给每篇资料判的“内容类型”（写在 prompts/content-understanding.md 里，改了类型要同步改那份提示词）。
  * 评分提示词（prompts/selection-score.md）按类型给五个维度不同的权重。
  */
-export const ITEM_TYPES = ["model_release", "product_launch", "tool_or_prompt", "research_paper", "industry_event", "opinion_analysis", "tutorial_explainer"] as const;
+export const ITEM_TYPES = ["policy_release", "platform_or_mechanism", "practice_guide", "research_report", "case_or_event", "opinion_analysis", "explainer"] as const;
 
 // ── 标签词表 ────────────────────────────────────────────────────────────────────────────
 
-/** 每篇资料的第一个标签必须是这些“分类标签”之一。 */
+/** 每篇资料的第一个标签必须是这些“分类标签”之一（表达内容的性质）。最后一个是兜底。 */
 export const CATEGORY_TAGS = [
-  "产品更新", "模型发布", "论文/研究", "开源/仓库", "教程/实践", "现象/趋势", "大佬观点", "评测/基准", "安全/对齐", "行业动态", "政策/监管",
-  "非AI/通用工具", "其他",
+  "立法与政策", "工作部署", "司法与案例", "条约与国际规则", "仲裁与争议解决", "实务指南", "学术与智库", "平台与人才", "其他",
 ] as const;
 
-/** 可选的主题标签。 */
+/** 可选的主题标签：工作层级和议题。 */
 export const TOPIC_TAGS = [
-  "Agent", "编码", "推理", "多模态", "语音", "视频", "图像生成", "RAG", "端侧", "数据/训练", "搜索", "部署/工程", "开源生态", "具身智能", "MCP/工具调用",
+  "中央", "部委", "地方", "自贸区", "涉外律师", "涉外仲裁", "法律查明", "域外适用", "出口管制与制裁", "反外国制裁", "数据出境",
+  "海事海商", "知识产权", "对外投资", "国家豁免", "跨境执行", "一带一路", "国际组织",
 ] as const;
 
-/** 可选的实体标签（公司、机构、平台）。 */
-export const ENTITY_TAGS = ["OpenAI", "Anthropic", "DeepSeek", "DeepMind", "Google", "Meta", "Microsoft", "xAI", "Hugging Face", "GitHub", "arXiv"] as const;
+/** 可选的实体标签（机构、平台、国际组织）。 */
+export const ENTITY_TAGS = [
+  "司法部", "最高人民法院", "最高人民检察院", "商务部", "外交部", "法通网", "国际商事法庭", "贸仲", "贸促会", "联合国", "WTO", "国际法委员会", "国际刑事法院",
+] as const;
 
 /** 模型常写的近义词，统一成词表里的写法。 */
 export const TAG_SYNONYMS: Readonly<Record<string, string>> = {
-  "教程/玩法": "教程/实践", "技巧/最佳实践": "教程/实践", "合作/生态": "行业动态", "融资/收购": "行业动态", "公司动态": "行业动态",
-  合作: "行业动态", 生态: "行业动态", 融资: "行业动态", 收购: "行业动态", 投资: "行业动态", 并购: "行业动态",
-  政策: "政策/监管", 监管: "政策/监管", 法规: "政策/监管", 安全: "安全/对齐", 对齐: "安全/对齐",
-  论文: "论文/研究", 研究: "论文/研究", paper: "论文/研究", papers: "论文/研究",
-  "open-source": "开源/仓库", 开源: "开源/仓库", 仓库: "开源/仓库", repo: "开源/仓库",
-  教程: "教程/实践", 玩法: "教程/实践", 指南: "教程/实践", 技巧: "教程/实践", 最佳实践: "教程/实践", 实践: "教程/实践",
-  产品: "产品更新", 更新: "产品更新", 发布: "模型发布", 模型: "模型发布", 趋势: "现象/趋势", 现象: "现象/趋势", 观点: "大佬观点",
-  视频生成: "视频", 非ai: "非AI/通用工具", "non-ai": "非AI/通用工具", 通用工具: "非AI/通用工具", 工程工具: "非AI/通用工具",
-  安全扫描: "非AI/通用工具", devops: "非AI/通用工具", 行业: "行业动态", 动态: "行业动态",
+  立法: "立法与政策", 政策: "立法与政策", 法规: "立法与政策", 规章: "立法与政策", 司法解释: "立法与政策", 规划: "立法与政策",
+  部署: "工作部署", 工作动态: "工作部署", 机制建设: "工作部署", 专项行动: "工作部署", 试点: "工作部署",
+  案例: "司法与案例", 判决: "司法与案例", 裁判: "司法与案例", 审判: "司法与案例", 典型案例: "司法与案例", 司法: "司法与案例",
+  条约: "条约与国际规则", 国际规则: "条约与国际规则", 国际公约: "条约与国际规则", 公约: "条约与国际规则", 多边规则: "条约与国际规则",
+  仲裁: "仲裁与争议解决", 争议解决: "仲裁与争议解决", 调解: "仲裁与争议解决", 国际仲裁: "仲裁与争议解决",
+  指南: "实务指南", 实务: "实务指南", 合规指引: "实务指南", 操作指引: "实务指南", 教程: "实务指南",
+  学术: "学术与智库", 智库: "学术与智库", 研究: "学术与智库", 论文: "学术与智库", 观点: "学术与智库", 评论: "学术与智库",
+  平台: "平台与人才", 人才: "平台与人才", 人才培养: "平台与人才", 平台建设: "平台与人才",
+  国家层面: "中央", 中央部署: "中央", 部门: "部委", 部委推进: "部委", 地方实践: "地方", 省市: "地方", 自由贸易区: "自贸区", 自贸港: "自贸区",
+  律师: "涉外律师", 域外法查明: "法律查明", 外国法查明: "法律查明", 制裁: "出口管制与制裁", 出口管制: "出口管制与制裁", 反制裁: "反外国制裁",
+  数据跨境: "数据出境", 海商法: "海事海商", 海事: "海事海商", 知产: "知识产权", 对外投资: "对外投资", 豁免: "国家豁免", 承认与执行: "跨境执行",
+  CIETAC: "贸仲", cietac: "贸仲", 中国贸仲: "贸仲", CCPIT: "贸促会", ccpit: "贸促会", 联合国大会: "联合国", ILC: "国际法委员会", ilc: "国际法委员会",
+  ICC: "国际刑事法院", icc: "国际刑事法院", CICC: "国际商事法庭", cicc: "国际商事法庭", wto: "WTO", 世贸组织: "WTO", 世界贸易组织: "WTO", 贸促会: "贸促会",
 };
 
-// ── 公司与主体 ──────────────────────────────────────────────────────────────────────────
+// ── 机构与主体 ──────────────────────────────────────────────────────────────────────────
 
 /**
- * 公司主题：id → 显示名、卡片上显示的标签（null 表示只用 entity:<id> 归类）、别名。
- * aliases 给结构抽取模型看；otherNames 是公司自己的其他称呼（官方账号名、子品牌），
+ * 机构主题：id → 显示名、卡片上显示的标签（null 表示只用 entity:<id> 归类）、别名。
+ * aliases 给结构抽取模型看；otherNames 是机构自己的其他称呼（下属机构、官方账号名），
  * 把事实的主体对到发布方时也认它们。
  */
 export const ENTITIES: Record<string, { name: string; displayTag: string | null; aliases: string[]; otherNames?: string[] }> = {
-  "world-labs": { name: "World Labs", displayTag: null, aliases: ["World Labs"] },
-  "thinking-machines": { name: "Thinking Machines Lab", displayTag: null, aliases: ["Thinking Machines"] },
-  amd: { name: "AMD", displayTag: null, aliases: ["AMD", "Advanced Micro Devices"] },
-  openai: { name: "OpenAI", displayTag: "OpenAI", aliases: ["OpenAI", "ChatGPT", "Sora", "Codex", "GPT"], otherNames: ["OpenAI Developers"] },
-  anthropic: { name: "Anthropic", displayTag: "Anthropic", aliases: ["Anthropic", "Claude"], otherNames: ["Claude Code"] },
-  google: { name: "Google", displayTag: "Google", aliases: ["Google", "DeepMind", "Gemini", "谷歌"], otherNames: ["Google DeepMind", "Google Research", "Google AI", "Google Labs", "Google Cloud"] },
-  deepseek: { name: "DeepSeek", displayTag: "DeepSeek", aliases: ["DeepSeek", "深度求索"] },
-  qwen: { name: "千问 Qwen", displayTag: null, aliases: ["Qwen", "通义", "阿里"], otherNames: ["通义千问", "千问", "千问APP", "Qwen Team", "通义实验室", "阿里巴巴", "Alibaba", "阿里云", "Alibaba Cloud"] },
-  kimi: { name: "Kimi / 月之暗面", displayTag: null, aliases: ["Kimi", "月之暗面", "Moonshot"], otherNames: ["Moonshot AI"] },
-  minimax: { name: "MiniMax", displayTag: null, aliases: ["MiniMax", "海螺"], otherNames: ["稀宇科技"] },
-  zhipu: { name: "智谱 GLM", displayTag: null, aliases: ["智谱", "GLM", "Z.ai"], otherNames: ["智谱AI", "Zhipu", "Zhipu AI"] },
-  xai: { name: "xAI", displayTag: "xAI", aliases: ["xAI", "Grok"], otherNames: ["SpaceXAI"] },
-  meta: { name: "Meta", displayTag: "Meta", aliases: ["Meta", "Llama"], otherNames: ["Meta AI", "AI at Meta"] },
-  microsoft: { name: "Microsoft", displayTag: "Microsoft", aliases: ["Microsoft", "微软", "Copilot"], otherNames: ["Microsoft Research", "Microsoft AI"] },
-  nvidia: { name: "NVIDIA", displayTag: null, aliases: ["NVIDIA", "英伟达"] },
-  "hugging-face": { name: "Hugging Face", displayTag: "Hugging Face", aliases: ["Hugging Face"], otherNames: ["HuggingFace"] },
-  cursor: { name: "Cursor", displayTag: null, aliases: ["Cursor", "Anysphere"] },
-  openrouter: { name: "OpenRouter", displayTag: null, aliases: ["OpenRouter"] },
+  moj: { name: "司法部", displayTag: "司法部", aliases: ["司法部", "Ministry of Justice"], otherNames: ["司法部涉外法治局", "中国法律服务网", "中央依法治国办"] },
+  spc: { name: "最高人民法院", displayTag: "最高人民法院", aliases: ["最高人民法院", "最高法", "Supreme People's Court"] },
+  spp: { name: "最高人民检察院", displayTag: "最高人民检察院", aliases: ["最高人民检察院", "最高检"], otherNames: ["最高检察院"] },
+  mofcom: { name: "商务部", displayTag: "商务部", aliases: ["商务部", "Ministry of Commerce", "MOFCOM"] },
+  mfa: { name: "外交部", displayTag: "外交部", aliases: ["外交部", "Ministry of Foreign Affairs"], otherNames: ["外交部条约法律司", "条法司"] },
+  falitong: { name: "法通网", displayTag: "法通网", aliases: ["法通网", "法通"], otherNames: ["法小通"] },
+  cicc: { name: "最高人民法院国际商事法庭", displayTag: "国际商事法庭", aliases: ["国际商事法庭", "CICC"], otherNames: ["中国国际商事法庭", "国际商事专家委员会"] },
+  cietac: { name: "中国国际经济贸易仲裁委员会", displayTag: "贸仲", aliases: ["贸仲", "中国国际经济贸易仲裁委员会", "CIETAC"], otherNames: ["中国贸仲", "贸仲委"] },
+  ccpit: { name: "中国国际贸易促进委员会", displayTag: "贸促会", aliases: ["贸促会", "中国国际贸易促进委员会", "CCPIT"], otherNames: ["中国贸促会", "贸法通"] },
+  un: { name: "联合国", displayTag: "联合国", aliases: ["联合国", "United Nations"], otherNames: ["联合国大会", "联合国安理会"] },
+  wto: { name: "世界贸易组织", displayTag: "WTO", aliases: ["世界贸易组织", "WTO", "World Trade Organization"], otherNames: ["世贸组织"] },
+  ilc: { name: "联合国国际法委员会", displayTag: "国际法委员会", aliases: ["国际法委员会", "International Law Commission"], otherNames: ["ILC"] },
+  icc: { name: "国际刑事法院", displayTag: "国际刑事法院", aliases: ["国际刑事法院", "International Criminal Court"], otherNames: ["ICC"] },
+  uncitral: { name: "联合国国际贸易法委员会", displayTag: null, aliases: ["联合国国际贸易法委员会", "UNCITRAL", "贸易法委员会"] },
+  hcch: { name: "海牙国际私法会议", displayTag: null, aliases: ["海牙国际私法会议", "HCCH", "Hague Conference on Private International Law"] },
 };
 
 /**
- * 身份词典：摘要和标题里出现的公司，必须在原文里也出现过，否则退回原标题、丢掉摘要（防止模型张冠李戴）。
- * 行业没有这个问题时可以留空数组。
+ * 身份词典：摘要和标题里出现的机构，必须在原文里也出现过，否则退回原标题、丢掉摘要（防止模型张冠李戴）。
+ * 只列名称不易和别的机构混淆的写法。
  */
 export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; patterns: RegExp[] }> = [
-  { id: "openai", name: "OpenAI", patterns: [/openai|chatgpt|\bgpt-?[o\d]|\bsora\b|\bcodex\b/i] },
-  { id: "anthropic", name: "Anthropic", patterns: [/anthropic|\bclaude\b/i, /\b(?:opus|sonnet|haiku)\s*\d+(?:[.\-]\d+)*\b/i, /\bfable\s*\d+(?:[.\-]\d+)*\b|\bmythos\b/i] },
-  { id: "google", name: "Google / Gemini", patterns: [/google|deepmind|\bgemini\b|notebooklm|\bveo\s?\d|\bAlphaFold\b|\bAMIE\b/i] },
-  { id: "deepseek", name: "DeepSeek", patterns: [/deepseek|深度求索/i] },
-  { id: "xai", name: "xAI / Grok", patterns: [/\bxai\b|\bgrok\b/i] },
-  { id: "meta", name: "Meta / Llama", patterns: [/\bMeta\b/, /\bmeta\s?ai\b|\bllama\b/i] },
-  { id: "microsoft", name: "Microsoft / Copilot", patterns: [/microsoft|copilot|微软/i] },
-  { id: "nvidia", name: "NVIDIA", patterns: [/nvidia|英伟达|\bnemotron\b|\bnemo\b|\bblackwell\b|\brubin(?:\s+ultra)?\b|\bcuda\b/i] },
-  { id: "qwen", name: "千问 Qwen", patterns: [/\bqwen|通义|千问/i] },
-  { id: "hugging-face", name: "Hugging Face", patterns: [/hugging\s?face/i] },
-  { id: "cursor", name: "Cursor", patterns: [/\bCursor\b/] },
-  { id: "kimi", name: "Kimi / 月之暗面", patterns: [/\bkimi\b|月之暗面|\bmoonshot\s?ai\b/i] },
-  { id: "openrouter", name: "OpenRouter", patterns: [/openrouter/i] },
-  { id: "minimax", name: "MiniMax", patterns: [/minimax/i] },
-  { id: "zhipu", name: "智谱 GLM", patterns: [/智谱|\bglm-?[4-9]/i] },
-  { id: "hunyuan", name: "腾讯混元", patterns: [/混元|hunyuan/i] },
-  { id: "doubao", name: "字节豆包", patterns: [/豆包|doubao|字节跳动|bytedance/i] },
-  { id: "mistral", name: "Mistral", patterns: [/mistral/i] },
-  { id: "perplexity", name: "Perplexity", patterns: [/\bPerplexity\b/] },
-  { id: "runway", name: "Runway", patterns: [/\brunway\b/i] },
-  { id: "suno", name: "Suno", patterns: [/\bsuno\b/i] },
-  { id: "midjourney", name: "Midjourney", patterns: [/midjourney/i] },
-  { id: "stability-ai", name: "Stability AI", patterns: [/stability\s?ai/i] },
-  { id: "elevenlabs", name: "ElevenLabs", patterns: [/eleven\s?labs/i] },
-  { id: "vllm", name: "vLLM", patterns: [/\bvllm\b/i] },
-  { id: "ollama", name: "Ollama", patterns: [/\bollama\b/i] },
-  { id: "windsurf", name: "Windsurf", patterns: [/windsurf/i] },
-  { id: "devin", name: "Devin", patterns: [/\bdevin\b/i] },
-  { id: "manus", name: "Manus", patterns: [/\bmanus\b/i] },
-  { id: "apple", name: "Apple AI", patterns: [/\bapple\s?(intelligence|silicon|ai)\b|苹果(智能|\s?AI)/i] },
-  { id: "amazon", name: "Amazon / AWS", patterns: [/amazon|\baws\b|亚马逊/i] },
-  { id: "baidu", name: "百度文心", patterns: [/百度|baidu|文心|\bernie\s?bot\b/i] },
+  { id: "moj", name: "司法部", patterns: [/司法部|Ministry of Justice/i] },
+  { id: "spc", name: "最高人民法院", patterns: [/最高人民法院|最高法(?!院)|Supreme People['’]s Court/i] },
+  { id: "spp", name: "最高人民检察院", patterns: [/最高人民检察院|最高检/] },
+  { id: "mofcom", name: "商务部", patterns: [/商务部|\bMOFCOM\b|Ministry of Commerce/i] },
+  { id: "mfa", name: "外交部", patterns: [/外交部|Ministry of Foreign Affairs/i] },
+  { id: "falitong", name: "法通网", patterns: [/法通网|法小通/] },
+  { id: "cicc", name: "国际商事法庭", patterns: [/国际商事法庭|\bCICC\b/] },
+  { id: "cietac", name: "贸仲", patterns: [/贸仲|中国国际经济贸易仲裁委员会|\bCIETAC\b/i] },
+  { id: "ccpit", name: "贸促会", patterns: [/贸促会|中国国际贸易促进委员会|\bCCPIT\b/i] },
+  { id: "un", name: "联合国", patterns: [/联合国|United Nations/i] },
+  { id: "wto", name: "WTO", patterns: [/世贸组织|世界贸易组织|\bWTO\b/i] },
+  { id: "ilc", name: "国际法委员会", patterns: [/国际法委员会|International Law Commission/i] },
+  { id: "icc", name: "国际刑事法院", patterns: [/国际刑事法院|International Criminal Court/i] },
 ];
 
-/** 这些域名上的文章，发布方就是对应的公司（托管平台如 GitHub、arXiv 不算）。 */
+/** 这些域名上的文章，发布方就是对应的机构（托管平台不算）。 */
 export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: readonly string[] }> = [
-  { entityId: "openai", domains: ["openai.com"] },
-  { entityId: "anthropic", domains: ["anthropic.com", "claude.com"] },
-  { entityId: "google", domains: ["deepmind.google", "ai.google", "blog.google"] },
-  { entityId: "deepseek", domains: ["deepseek.com"] },
-  { entityId: "xai", domains: ["x.ai"] },
-  { entityId: "meta", domains: ["ai.meta.com"] },
-  { entityId: "microsoft", domains: ["microsoft.com"] },
-  { entityId: "nvidia", domains: ["nvidia.com"] },
-  { entityId: "qwen", domains: ["qwen.ai"] },
-  { entityId: "cursor", domains: ["cursor.com"] },
-  { entityId: "openrouter", domains: ["openrouter.ai"] },
+  { entityId: "moj", domains: ["moj.gov.cn"] },
+  { entityId: "cicc", domains: ["cicc.court.gov.cn"] },
+  { entityId: "spc", domains: ["court.gov.cn"] },
+  { entityId: "spp", domains: ["spp.gov.cn"] },
+  { entityId: "mofcom", domains: ["mofcom.gov.cn"] },
+  { entityId: "mfa", domains: ["mfa.gov.cn", "fmprc.gov.cn"] },
+  { entityId: "cietac", domains: ["cietac.org"] },
+  { entityId: "ccpit", domains: ["ccpit.org"] },
+  { entityId: "un", domains: ["un.org"] },
+  { entityId: "wto", domains: ["wto.org"] },
+  { entityId: "icc", domains: ["icc-cpi.int"] },
+  { entityId: "uncitral", domains: ["uncitral.un.org"] },
+  { entityId: "hcch", domains: ["hcch.net"] },
 ];
 
-/** 原文里的这些写法也算提到了对应公司。 */
-export const IDENTITY_CONTEXT_ALIASES: ReadonlyArray<{ entityId: string; pattern: RegExp }> = [
-  { entityId: "meta", pattern: /@AIatMeta\b/i },
-  { entityId: "zhipu", pattern: /\bZhipu(?:\s+AI\b|['’]s\b)/i },
-];
+/** 原文里的这些写法也算提到了对应机构。 */
+export const IDENTITY_CONTEXT_ALIASES: ReadonlyArray<{ entityId: string; pattern: RegExp }> = [];
